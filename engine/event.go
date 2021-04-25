@@ -52,11 +52,9 @@ func loadEvent(e *Engine) bool {
 // decodeEvent executes the current Event
 func decodeEvent(e *Engine) bool {
 	event := e.getEvent()
-	e.event.index++
 	switch event.Type {
 	case script.EventText:
-		model.SetText(event.Character, event.Text)
-		return true // Need to update the displayed text
+		e.state = printText
 	case script.EventScene:
 		e.event.next = event.Scene
 		e.state = loadScene
@@ -65,8 +63,11 @@ func decodeEvent(e *Engine) bool {
 		e.state = loadEvent
 	case script.EventChoice:
 		e.state = printChoices
+		return false
 	case script.EventStats:
+		e.state = updateStats
 		model.UpdateStats(event.Stats)
+		e.event.index++
 		return true // Need to update any displayed stats
 	default:
 		log.Fatalf("invalid event type: %s[%d] %s\n", e.event.curr, e.event.index, event.Type)

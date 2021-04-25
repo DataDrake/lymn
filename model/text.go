@@ -21,6 +21,7 @@ var text struct {
 	character string
 	value     string
 	changed   bool
+	paused    bool
 }
 
 // SetText changes the current text
@@ -39,4 +40,19 @@ func HasTextChanged() bool {
 func GetText() (character, value string) {
 	text.changed = false
 	return text.character, text.value
+}
+
+// PauseText prevents the state machine from advancing while more text is available
+func PauseText() {
+	text.paused = true
+}
+
+// TextPaused checks if the text is paused
+func TextPaused() bool {
+	return text.paused
+}
+
+// UnpauseText clear a pause on text rendering
+func UnpauseText() {
+	text.paused = true
 }

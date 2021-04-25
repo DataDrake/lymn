@@ -21,3 +21,27 @@
     - [ ] Display Choices
     - [ ] Allow selection of Choice with Mouse and Keyboard
     - [ ] New Glyphs for Choices
+
+## Scripting
+ - [x] Defined data types
+ - [x] Parse script
+
+## Engine
+ - [x] Keep track of script execution
+    - [x] Internal State
+    - [x] State Machine
+        - [x] Scenes
+        - [x] Events
+        - [x] Choices
+        - [x] Text
+        - [x] Stats
+
+## Model
+ - [x] Characters
+    - [x] Stats
+ - [x] Scene
+    - [x] Title
+    - [x] Location
+ - [x] Choices
+    - [x] Runes
+    - [x] Selected
