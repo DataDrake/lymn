@@ -18,6 +18,7 @@ package script
 
 // Scene represents a narrative location where a sequents of events is carries out
 type Scene struct {
+	Title    string `yaml:"title"`
 	Location string `yaml:"location"`
 	Start    string `yaml:"start"`
 	Events   Events `yaml:"events"`

@@ -14,30 +14,29 @@
 // limitations under the License.
 //
 
-package script
+package engine
 
 import (
-	_ "embed" // needed for embeddable data
-	"gopkg.in/yaml.v3"
+	"github.com/DataDrake/ld48/model"
+	"github.com/DataDrake/ld48/script"
 	"log"
 )
 
-//go:embed script.yml
-var raw []byte
-
-// Script provides all of the information needed for the Engine to run
-type Script struct {
-	Title  string `yaml:"title"`
-	Author string `yaml:"author"`
-	Date   string `yaml:"date"`
-	Start  string `yaml:"start"`
-	Scenes Scenes `yaml:"scenes"`
+// getScene gets the current Scene from the script
+func (e *Engine) getScene() script.Scene {
+	scene, ok := e.script.Scenes[e.scene.curr]
+	if !ok {
+		log.Fatalf("missing scene: %s\n", e.scene.curr)
+	}
+	return scene
 }
 
-// Load parses the embedded Script
-func Load() (s Script) {
-	if err := yaml.Unmarshal(raw, &s); err != nil {
-		log.Fatalf("Failed to decode script: %s\n", err)
-	}
-	return
+// loadScene changes the current Scene and notifies the UI
+func loadScene(e *Engine) bool {
+	e.scene.curr = e.scene.next
+	scene := e.getScene()
+	e.event.next = scene.Start
+	model.SetScene(scene.Title, scene.Location)
+	e.state = loadEvent
+	return true // blocked because the UI needs to update
 }

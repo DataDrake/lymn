@@ -18,10 +18,10 @@ package script
 
 // Stat represents a scripted modification to a character's stats
 type Stat struct {
-	Name      string `yaml:"name"`
-	Character string `yaml:"character"`
-	Type      string `yaml:"type"`
-	Value     int    `yaml:"value"`
+	Name      string   `yaml:"name"`
+	Character string   `yaml:"character"`
+	Type      StatKind `yaml:"type"`
+	Value     int      `yaml:"value"`
 }
 
 // StatKind enumerates all of the available types of Stat modification

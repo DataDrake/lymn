@@ -16,12 +16,6 @@
 
 package script
 
-// Choice represents a scripted Choice theat a Player made
-type Choice struct {
-	Type  string `yaml:"type"`
-	Value string `yaml:"value"`
-}
-
 // ChoiceKind helps enumerate the supported types of Choice
 type ChoiceKind string
 
@@ -33,6 +27,12 @@ const (
 	// ChoiceQuit is a Choice which exits the game
 	ChoiceQuit ChoiceKind = "quit"
 )
+
+// Choice represents a scripted Choice theat a Player made
+type Choice struct {
+	Type  ChoiceKind `yaml:"type"`
+	Value string     `yaml:"value"`
+}
 
 // Choices relates the rune used to display the Choice to the Choice it selects
 type Choices map[rune]Choice

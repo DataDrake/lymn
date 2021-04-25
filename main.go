@@ -18,6 +18,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/DataDrake/ld48/engine"
+	"github.com/DataDrake/ld48/script"
 	"github.com/DataDrake/ld48/ui"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -27,15 +29,17 @@ import (
 
 // Game is the global Game object
 type Game struct {
-	grid *ui.Grid
-	last time.Time
+	grid   *ui.Grid
+	engine *engine.Engine
+	last   time.Time
 }
 
 // NewGame creates a Game and populates the UI
 func NewGame() (g *Game) {
 	g = &Game{
-		grid: ui.NewGrid(),
-		last: time.Now(),
+		grid:   ui.NewGrid(),
+		engine: engine.NewEngine(script.Load()),
+		last:   time.Now(),
 	}
 	g.grid.Set(1, 1, 2, 2, []rune("AbcD"), false)
 	g.grid.Set(0, 0, 1, ui.Cols, []rune(" AbcDEFGHIJKLMNOPQRSTUVWXYZ"), true)

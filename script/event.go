@@ -16,17 +16,6 @@
 
 package script
 
-// Event is one of a sequence of possible actions which occur during a Scene
-type Event struct {
-	Type      string  `yaml:"type"`
-	Character string  `yaml:"character"`
-	Text      string  `yaml:"text"`
-	Scene     string  `yaml:"scene"`
-	Event     string  `yaml:"event"`
-	Choices   Choices `yaml:"choices"`
-	Stats     Stats   `yaml:"stats"`
-}
-
 // EventKind helps enumerate all of the possible types of Event
 type EventKind string
 
@@ -42,6 +31,17 @@ const (
 	// EventStats is an event which alters the Stats of a Player or NPC
 	EventStats EventKind = "stats"
 )
+
+// Event is one of a sequence of possible actions which occur during a Scene
+type Event struct {
+	Type      EventKind `yaml:"type"`
+	Character string    `yaml:"character"`
+	Text      string    `yaml:"text"`
+	Scene     string    `yaml:"scene"`
+	Event     string    `yaml:"event"`
+	Choices   Choices   `yaml:"choices"`
+	Stats     Stats     `yaml:"stats"`
+}
 
 // Events maps a string ID to a sequential group of events
 type Events map[string][]Event

@@ -14,30 +14,29 @@
 // limitations under the License.
 //
 
-package script
+package model
 
-import (
-	_ "embed" // needed for embeddable data
-	"gopkg.in/yaml.v3"
-	"log"
-)
-
-//go:embed script.yml
-var raw []byte
-
-// Script provides all of the information needed for the Engine to run
-type Script struct {
-	Title  string `yaml:"title"`
-	Author string `yaml:"author"`
-	Date   string `yaml:"date"`
-	Start  string `yaml:"start"`
-	Scenes Scenes `yaml:"scenes"`
+// scene contains the scene data to be shared between UI and Engine
+var scene struct {
+	title    string
+	location string
+	changed  bool
 }
 
-// Load parses the embedded Script
-func Load() (s Script) {
-	if err := yaml.Unmarshal(raw, &s); err != nil {
-		log.Fatalf("Failed to decode script: %s\n", err)
-	}
-	return
+// SetScene changes the scene
+func SetScene(title, location string) {
+	scene.title = title
+	scene.location = location
+	scene.changed = true
+}
+
+// HasSceneChanged checks if any changes have been made to the scene
+func HasSceneChanged() bool {
+	return scene.changed
+}
+
+// GetScene returns the current Scene and clears the changed status
+func GetScene() (title, location string) {
+	scene.changed = false
+	return scene.title, scene.location
 }

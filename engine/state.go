@@ -14,30 +14,7 @@
 // limitations under the License.
 //
 
-package script
+package engine
 
-import (
-	_ "embed" // needed for embeddable data
-	"gopkg.in/yaml.v3"
-	"log"
-)
-
-//go:embed script.yml
-var raw []byte
-
-// Script provides all of the information needed for the Engine to run
-type Script struct {
-	Title  string `yaml:"title"`
-	Author string `yaml:"author"`
-	Date   string `yaml:"date"`
-	Start  string `yaml:"start"`
-	Scenes Scenes `yaml:"scenes"`
-}
-
-// Load parses the embedded Script
-func Load() (s Script) {
-	if err := yaml.Unmarshal(raw, &s); err != nil {
-		log.Fatalf("Failed to decode script: %s\n", err)
-	}
-	return
-}
+// stateFn is a function to call at the current State of the Engine
+type stateFn func(e *Engine) (blocked bool)
