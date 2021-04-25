@@ -1,0 +1,47 @@
+title: Example Script
+author: DataDrake
+start: start
+scenes:
+    start: start
+        location: Empty Room
+        start: begin
+        events:
+            begin:
+                - type: text
+                  text: |
+                        You are standing in an empty room with a single door.
+                - type: choice
+                  choices:
+                        \u16:
+                            type: event
+                            value: die
+                        \u17:
+                            type: event
+                            value: look
+                        \u18:
+                            type: scene
+                            value: room2
+            die:
+                - type: stats
+                  stats:
+                        - name: health
+                          character: player
+                          type: set
+                          value: 0
+                - type: text
+                  character: Narrator
+                  text: You have died a gruesome death. Would you like to try again?
+                - type: choice
+                        \u31:
+                            type: scene
+                            value: start
+                        \u32:
+                            type: quit
+    room2:
+        location: Dark Room
+        start: voice
+        events:
+           voice:
+                - type: text
+                  character: ???
+                  text: Who goes there?!?

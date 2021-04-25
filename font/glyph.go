@@ -27,7 +27,7 @@ import (
 // Glyph holds the data for a single glyph
 type Glyph struct {
 	src *image.Paletted
-    img *ebiten.Image
+	img *ebiten.Image
 }
 
 // Bounds returns the bounding box for this Glyph
@@ -37,7 +37,7 @@ func (g *Glyph) Bounds() image.Rectangle {
 
 // Image returns the internal image as an ebiten image
 func (g *Glyph) Image() *ebiten.Image {
-    return g.img
+	return g.img
 }
 
 // SetPalette changes the color palette for this Glyph

@@ -27,8 +27,8 @@ import (
 
 // Game is the global Game object
 type Game struct {
-	grid   *ui.Grid
-	last   time.Time
+	grid *ui.Grid
+	last time.Time
 }
 
 // NewGame creates a Game and populates the UI
@@ -37,10 +37,10 @@ func NewGame() (g *Game) {
 		grid: ui.NewGrid(),
 		last: time.Now(),
 	}
-    g.grid.Set(1, 1, 2, 2, []rune("AbcD"))
-    g.grid.Set(4, 5, 2, 2, []rune("AbcD"))
-    g.grid.Set(10, 18, 2, 2, []rune("AbcD"))
-    g.grid.Set(30, 2, 2, 2, []rune("AbcD"))
+	g.grid.Set(1, 1, 2, 2, []rune("AbcD"), false)
+	g.grid.Set(0, 0, 1, ui.Cols, []rune(" AbcDEFGHIJKLMNOPQRSTUVWXYZ"), true)
+	g.grid.Set(10, 18, 2, 2, []rune("AbcD"), true)
+	g.grid.Set(30, 2, 2, 2, []rune("AbcD"), false)
 	return
 }
 
@@ -53,7 +53,7 @@ func (g *Game) Update() error {
 
 // Draw renders Game to a screen
 func (g *Game) Draw(screen *ebiten.Image) {
-    g.grid.Draw(screen)
+	g.grid.Draw(screen)
 	elapsed := time.Now().Sub(g.last)
 	ebitenutil.DebugPrintAt(screen, fmt.Sprintf("Time: %0.3fms", elapsed.Seconds()*1000), 8, 256)
 }
@@ -64,8 +64,8 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 }
 
 func main() {
-    g := NewGame()
-	ebiten.SetWindowSize(g.Layout(0,0))
+	g := NewGame()
+	ebiten.SetWindowSize(g.Layout(0, 0))
 	ebiten.SetWindowResizable(false)
 	ebiten.SetWindowTitle("LD48")
 	if err := ebiten.RunGame(g); err != nil {

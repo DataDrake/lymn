@@ -17,7 +17,7 @@
 package font
 
 import (
-	_ "embed"
+	_ "embed" // required for embedding things
 	"encoding/json"
 	"fmt"
 	"github.com/DataDrake/ld48/font/encoding"
@@ -35,7 +35,7 @@ var rawColors []byte
 
 // LoadColors decodes the built-in color palette
 func LoadColors() {
-    var err error
+	var err error
 	Colors, err = NewPalette(rawColors)
 	if err != nil {
 		log.Fatal(err)

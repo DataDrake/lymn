@@ -17,7 +17,7 @@
 package font
 
 import (
-	_ "embed"
+	_ "embed" // required for embedding
 	"encoding/json"
 	"fmt"
 	"log"
@@ -26,20 +26,21 @@ import (
 	"time"
 )
 
+// Default is the Font to use for rendering things
 var Default *Font
 
 //go:embed font.json
 var rawFont []byte
 
 func init() {
-    var err error
+	var err error
 	Default, err = NewFont(rawFont)
 	if err != nil {
 		log.Fatal(err)
 	}
 	Default.Describe()
 	println()
-    LoadColors()
+	LoadColors()
 	Default.SetPalette(Colors)
 }
 
@@ -80,5 +81,5 @@ func (f *Font) Describe() {
 
 // Size returns the square dimension of each glyph
 func (f *Font) Size() int {
-    return f.Glyphs[0].src.Stride
+	return f.Glyphs[0].src.Stride
 }
