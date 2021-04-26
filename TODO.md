@@ -2,9 +2,9 @@
 
 ## UI
 
-- [ ] Titlebar
-    - [ ] Title Text
-    - [ ] Location Text
+- [x] Titlebar
+    - [x] Title Text
+    - [x] Location Text
 - [ ] TextArea
     - [ ] Display a border box
     - [ ] Display text with wrapping in Box

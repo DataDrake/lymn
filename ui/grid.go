@@ -59,8 +59,21 @@ func (g *Grid) calcXY(x, y int) (ix, iy, iw, ih int) {
 	return
 }
 
-// Set replaces a rectangular region of the screen with the specified runes
-func (g *Grid) Set(x, y, rows, cols int, data []rune, inverted bool) {
+// Paint replaces a rectangular region of the screen with the specified color
+func (g *Grid) Paint(x, y, cols, rows int, bg color.Color) {
+	x, y, xInc, yInc := g.calcXY(x, y)
+	background := ebiten.NewImage(cols*xInc, rows*yInc)
+	background.Fill(bg)
+	op := &ebiten.DrawImageOptions{
+		CompositeMode: ebiten.CompositeModeCopy,
+	}
+	op.GeoM.Translate(float64(x+2*XMargin), float64(y))
+	g.img.DrawImage(background, op)
+}
+
+// Text replaces a rectangular region of the screen with the specified runes
+func (g *Grid) Text(x, y, cols, rows int, data []rune, fg color.Color, inverted bool) {
+	g.Paint(x, y, cols, rows, fg)
 	xStart, y, xInc, yInc := g.calcXY(x, y)
 	x = xStart
 	f := font.Default
@@ -68,13 +81,6 @@ func (g *Grid) Set(x, y, rows, cols int, data []rune, inverted bool) {
 	if inverted {
 		mode = ebiten.CompositeModeDestinationOut
 	}
-	background := ebiten.NewImage(cols*xInc, rows*yInc)
-	background.Fill(color.RGBA{0x00, 0xFF, 0xFF, 0xFF})
-	op := &ebiten.DrawImageOptions{
-		CompositeMode: ebiten.CompositeModeCopy,
-	}
-	op.GeoM.Translate(float64(x+2*XMargin), float64(y))
-	g.img.DrawImage(background, op)
 	for col, r := range data {
 		if col != 0 && (col%cols) == 0 {
 			x = xStart

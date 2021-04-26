@@ -19,10 +19,12 @@ package main
 import (
 	"fmt"
 	"github.com/DataDrake/ld48/engine"
+	"github.com/DataDrake/ld48/input"
 	"github.com/DataDrake/ld48/script"
 	"github.com/DataDrake/ld48/ui"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"image/color"
 	"log"
 	"time"
 )
@@ -30,6 +32,7 @@ import (
 // Game is the global Game object
 type Game struct {
 	grid   *ui.Grid
+	tb     *ui.Titlebar
 	engine *engine.Engine
 	last   time.Time
 }
@@ -38,25 +41,27 @@ type Game struct {
 func NewGame() (g *Game) {
 	g = &Game{
 		grid:   ui.NewGrid(),
+		tb:     ui.NewTitlebar(color.RGBA{0x00, 0xFF, 0xFF, 0xFF}),
 		engine: engine.NewEngine(script.Load()),
 		last:   time.Now(),
 	}
-	g.grid.Set(1, 1, 2, 2, []rune("AbcD"), false)
-	g.grid.Set(0, 0, 1, ui.Cols, []rune(" AbcDEFGHIJKLMNOPQRSTUVWXYZ"), true)
-	g.grid.Set(10, 18, 2, 2, []rune("AbcD"), true)
-	g.grid.Set(30, 2, 2, 2, []rune("AbcD"), false)
+	g.grid.Text(1, 1, 2, 2, []rune("AbcD"), color.RGBA{0x00, 0xFF, 0xFF, 0xFF}, false)
+	g.grid.Text(10, 18, 2, 2, []rune("AbcD"), color.RGBA{0x00, 0xFF, 0xFF, 0xFF}, true)
+	g.grid.Text(30, 2, 2, 2, []rune("AbcD"), color.RGBA{0x00, 0xFF, 0xFF, 0xFF}, false)
 	return
 }
 
 // Update checks for all updates in the input and the internal state of the Game
 func (g *Game) Update() error {
 	g.last = time.Now()
-	// input.Update()
+	input.Update()
+    g.engine.Update()
 	return nil
 }
 
 // Draw renders Game to a screen
 func (g *Game) Draw(screen *ebiten.Image) {
+	g.tb.Draw(g.grid)
 	g.grid.Draw(screen)
 	elapsed := time.Now().Sub(g.last)
 	ebitenutil.DebugPrintAt(screen, fmt.Sprintf("Time: %0.3fms", elapsed.Seconds()*1000), 8, 256)
