@@ -3,12 +3,13 @@
 ## UI
 
 - [ ] Titlebar
-    - [ ] Left Text
-    - [ ] Right Text
-    - [ ] Change the Color
+    - [ ] Title Text
+    - [ ] Location Text
 - [ ] TextArea
     - [ ] Display a border box
-    - [ ] Display Text Character by Character
+    - [ ] Display text with wrapping in Box
+        - [ ] Stretch: Hyphenation while wrapping
+    - [ ] Stretch: Display Text Character by Character
     - [ ] Stretch: Play randomized type-writer sounds as text prints
 - [ ] PlayerStats
     - [ ] Stat bars
@@ -45,3 +46,8 @@
  - [x] Choices
     - [x] Runes
     - [x] Selected
+
+## Input
+
+ - [x] Borrow keyboard input from Pixie
+    - [x] Optimize to only allow one listener per Key Press (no Release)
