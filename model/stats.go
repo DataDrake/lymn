@@ -22,7 +22,12 @@ import (
 )
 
 // characters contains all of the stats for characters
-var characters map[string]Stats
+var characters = map[string]Stats{
+	"Player": Stats{
+		"HP": 100,
+		"SP": 40,
+	},
+}
 
 // GetStats retrieves the stats of a character by name
 func GetStats(character string) Stats {

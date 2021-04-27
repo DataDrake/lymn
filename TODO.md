@@ -11,12 +11,11 @@
         - [ ] Stretch: Hyphenation while wrapping
     - [ ] Stretch: Display Text Character by Character
     - [ ] Stretch: Play randomized type-writer sounds as text prints
-- [ ] PlayerStats
-    - [ ] Stat bars
-        - [ ] Text Label
-        - [ ] ProgressBar (with colors)
-            - [ ] Add Glyphs for empty portion of the bar
-        - [ ] 2D Grid?
+- [x] PlayerStats
+    - [x] Stat bars
+        - [x] Text Label
+        - [x] ProgressBar (with colors)
+            - [x] Add Glyphs for empty portion of the bar
 - [ ] DialogueOptions
     - [ ] Prompt for continuation of text
     - [ ] Display Choices

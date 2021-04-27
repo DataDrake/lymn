@@ -9,8 +9,9 @@ scenes:
         events:
             begin:
                 - type: text
+                  character: Narrator
                   text: |
-                        You are standing in an empty room with a single door.
+                        You are standing in an empty room with one door.
                 - type: choice
                   choices:
                     16:

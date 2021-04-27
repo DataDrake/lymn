@@ -34,6 +34,8 @@ type Game struct {
 	grid   *ui.Grid
 	title  *ui.Titlebar
 	text   *ui.Textbox
+	hp     *ui.Statbar
+	sp     *ui.Statbar
 	engine *engine.Engine
 	last   time.Time
 }
@@ -44,6 +46,8 @@ func NewGame() (g *Game) {
 		grid:   ui.NewGrid(),
 		title:  ui.NewTitlebar(color.RGBA{0x00, 0xFF, 0xFF, 0xFF}),
 		text:   ui.NewTextbox(color.RGBA{0x00, 0xFF, 0xFF, 0xFF}),
+		hp:     ui.NewStatbar(1, ui.Rows-4, "HP", 100, color.RGBA{0xFF, 0xFF, 0xFF, 0xFF}),
+		sp:     ui.NewStatbar(1, ui.Rows-3, "SP", 100, color.RGBA{0xFF, 0xFF, 0xFF, 0xFF}),
 		engine: engine.NewEngine(script.Load()),
 		last:   time.Now(),
 	}
@@ -62,6 +66,8 @@ func (g *Game) Update() error {
 func (g *Game) Draw(screen *ebiten.Image) {
 	g.title.Draw(g.grid)
 	g.text.Draw(g.grid)
+	g.hp.Draw(g.grid)
+	g.sp.Draw(g.grid)
 	g.grid.Draw(screen)
 	elapsed := time.Now().Sub(g.last)
 	ebitenutil.DebugPrintAt(screen, fmt.Sprintf("Time: %0.3fms", elapsed.Seconds()*1000), 8, 620)
@@ -75,7 +81,7 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 func main() {
 	g := NewGame()
 	ebiten.SetWindowSize(g.Layout(0, 0))
-	ebiten.SetWindowResizable(false)
+	ebiten.SetWindowResizable(true)
 	ebiten.SetWindowTitle("LD48")
 	if err := ebiten.RunGame(g); err != nil {
 		log.Fatal(err)

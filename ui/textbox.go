@@ -23,7 +23,7 @@ import (
 
 var (
 	// TextRows determines the amount of screen space allowed for text
-	TextRows = Rows - 6
+	TextRows = Rows - 7
 )
 
 // Textbox is a bordered Box which prints text messages to the player
@@ -44,20 +44,20 @@ func (tb *Textbox) init(grid *Grid) {
 	border := make([]rune, Rows-6)
 	// left side
 	for i := 0; i < TextRows; i++ {
-		border[i] = '\u0001'
+		border[i] = 12
 	}
 	grid.Text(0, 1, 1, TextRows+1, border, tb.bg, false)
 	// right side
 	for i := 0; i < TextRows; i++ {
-		border[i] = '\u0007'
+		border[i] = 14
 	}
 	grid.Text(Cols-1, 1, 1, TextRows+1, border, tb.bg, false)
 	// bottom
 	border = make([]rune, Cols)
-	border[0] = '\u000B'
-	border[Cols-1] = '\u000A'
+	border[0] = 8
+	border[Cols-1] = 9
 	for i := 1; i < Cols-1; i++ {
-		border[i] = '\u000D'
+		border[i] = 13
 	}
 	grid.Text(0, TextRows+1, Cols, 1, border, tb.bg, false)
 	tb.inited = true
@@ -76,8 +76,9 @@ func (tb *Textbox) Draw(grid *Grid) {
 	}
 	character, value := model.GetText()
 	if len(character) > 0 {
+		character = " " + character + " "
 		grid.Text(1, 2, len(character), 1, []rune(character), tb.bg, true)
-		grid.Text(1, 4, Cols-2, TextRows-1, []rune(value), tb.bg, false)
+		grid.Text(1, 4, Cols-2, TextRows-3, []rune(value), tb.bg, false)
 	} else {
 		grid.Text(1, 2, Cols-2, TextRows-1, []rune(value), tb.bg, false)
 	}

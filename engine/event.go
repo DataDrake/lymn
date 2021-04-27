@@ -17,7 +17,6 @@
 package engine
 
 import (
-	"github.com/DataDrake/ld48/model"
 	"github.com/DataDrake/ld48/script"
 	"log"
 )
@@ -56,19 +55,15 @@ func decodeEvent(e *Engine) bool {
 	case script.EventText:
 		e.state = printText
 	case script.EventScene:
-		e.event.next = event.Scene
+		e.scene.next = event.Scene
 		e.state = loadScene
 	case script.EventEvent:
 		e.event.next = event.Event
 		e.state = loadEvent
 	case script.EventChoice:
 		e.state = printChoices
-		return false
 	case script.EventStats:
 		e.state = updateStats
-		model.UpdateStats(event.Stats)
-		e.event.index++
-		return true // Need to update any displayed stats
 	default:
 		log.Fatalf("invalid event type: %s[%d] %s\n", e.event.curr, e.event.index, event.Type)
 	}

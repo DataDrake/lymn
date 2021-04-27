@@ -79,7 +79,7 @@ func (f *Font) SetPalette(p *Palette) {
 // Render generates images for each Glyph to be later used in the rendering process
 func (f *Font) Render() {
 	f.width = f.height
-	XMargin = (f.height / 4) - 1
+	XMargin = f.height / 8
 	crop := image.Rect(XMargin, 0, f.width-XMargin, f.height)
 	for _, g := range f.Glyphs {
 		g.Render(crop)
