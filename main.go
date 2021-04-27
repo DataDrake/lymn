@@ -32,7 +32,8 @@ import (
 // Game is the global Game object
 type Game struct {
 	grid   *ui.Grid
-	tb     *ui.Titlebar
+	title  *ui.Titlebar
+	text   *ui.Textbox
 	engine *engine.Engine
 	last   time.Time
 }
@@ -41,13 +42,11 @@ type Game struct {
 func NewGame() (g *Game) {
 	g = &Game{
 		grid:   ui.NewGrid(),
-		tb:     ui.NewTitlebar(color.RGBA{0x00, 0xFF, 0xFF, 0xFF}),
+		title:  ui.NewTitlebar(color.RGBA{0x00, 0xFF, 0xFF, 0xFF}),
+		text:   ui.NewTextbox(color.RGBA{0x00, 0xFF, 0xFF, 0xFF}),
 		engine: engine.NewEngine(script.Load()),
 		last:   time.Now(),
 	}
-	g.grid.Text(1, 1, 2, 2, []rune("AbcD"), color.RGBA{0x00, 0xFF, 0xFF, 0xFF}, false)
-	g.grid.Text(10, 18, 2, 2, []rune("AbcD"), color.RGBA{0x00, 0xFF, 0xFF, 0xFF}, true)
-	g.grid.Text(30, 2, 2, 2, []rune("AbcD"), color.RGBA{0x00, 0xFF, 0xFF, 0xFF}, false)
 	return
 }
 
@@ -55,16 +54,17 @@ func NewGame() (g *Game) {
 func (g *Game) Update() error {
 	g.last = time.Now()
 	input.Update()
-    g.engine.Update()
+	g.engine.Update()
 	return nil
 }
 
 // Draw renders Game to a screen
 func (g *Game) Draw(screen *ebiten.Image) {
-	g.tb.Draw(g.grid)
+	g.title.Draw(g.grid)
+	g.text.Draw(g.grid)
 	g.grid.Draw(screen)
 	elapsed := time.Now().Sub(g.last)
-	ebitenutil.DebugPrintAt(screen, fmt.Sprintf("Time: %0.3fms", elapsed.Seconds()*1000), 8, 256)
+	ebitenutil.DebugPrintAt(screen, fmt.Sprintf("Time: %0.3fms", elapsed.Seconds()*1000), 8, 620)
 }
 
 // Layout specifies the layout dimensions of Game

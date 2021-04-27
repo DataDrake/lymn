@@ -23,8 +23,8 @@ import (
 
 // Titlebar is a topbar which prints both a Title and Location
 type Titlebar struct {
-	bg   color.Color
-	init bool
+	bg     color.Color
+	inited bool
 }
 
 // NewTitlebar creates a new empty titlebar of a specific color
@@ -34,15 +34,18 @@ func NewTitlebar(bg color.Color) (tb *Titlebar) {
 	}
 }
 
+func (tb *Titlebar) init(grid *Grid) {
+	grid.Paint(0, 0, Cols, 1, tb.bg)
+	tb.inited = true
+}
+
 // Draw renders Titlebar to a screen
 func (tb *Titlebar) Draw(grid *Grid) {
-	if tb.init && !model.HasSceneChanged() {
-		return
+	if !tb.inited {
+		tb.init(grid)
 	}
-	if !tb.init {
-		// Paint background
-		grid.Paint(0, 0, Cols, 1, tb.bg)
-		tb.init = true
+	if !model.HasSceneChanged() {
+		return
 	}
 	title, loc := model.GetScene()
 	l := len(title) + len(loc)

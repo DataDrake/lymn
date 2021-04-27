@@ -40,10 +40,14 @@ func (g *Glyph) Image() *ebiten.Image {
 	return g.img
 }
 
-// SetPalette changes the color palette for this Glyph
+// SetPalette changes the color palette for this Glyph and crops as needed
 func (g *Glyph) SetPalette(colors *Palette) {
 	g.src.Palette = color.Palette(colors.Colors)
-	g.img = ebiten.NewImageFromImage(g.src)
+}
+
+// Render generates an ebiten Image for this glyph, cropped accordingly
+func (g *Glyph) Render(crop image.Rectangle) {
+	g.img = ebiten.NewImageFromImage(g.src.SubImage(crop))
 }
 
 // UnmarshalJSON is a custom unmarshaler for the Glyph type

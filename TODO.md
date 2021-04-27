@@ -6,8 +6,8 @@
     - [x] Title Text
     - [x] Location Text
 - [ ] TextArea
-    - [ ] Display a border box
-    - [ ] Display text with wrapping in Box
+    - [x] Display a border box
+    - [x] Display text with wrapping in Box
         - [ ] Stretch: Hyphenation while wrapping
     - [ ] Stretch: Display Text Character by Character
     - [ ] Stretch: Play randomized type-writer sounds as text prints

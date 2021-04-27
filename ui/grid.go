@@ -27,8 +27,6 @@ const (
 	Cols = 40
 	// Rows specifies the height of the dispaly in characters
 	Rows = 20
-	// XMargin specifies the horizontal margin built into the Font Glyphs
-	XMargin = 2
 )
 
 // Grid is a 2D matrix of text, rendered to an Image
@@ -38,8 +36,9 @@ type Grid struct {
 
 // NewGrid creates an empty Grid of max size
 func NewGrid() (g *Grid) {
-	width := 2 * Cols * (font.Default.Size() - (2 * XMargin))
-	height := 2 * Rows * font.Default.Size()
+	width, height := font.Default.Size()
+	width *= 2 * Cols
+	height *= 2 * Rows
 	g = &Grid{
 		img: ebiten.NewImage(width, height),
 	}
@@ -52,9 +51,10 @@ func (g *Grid) Draw(screen *ebiten.Image) {
 }
 
 func (g *Grid) calcXY(x, y int) (ix, iy, iw, ih int) {
-	iw = 2 * (font.Default.Size() - (2 * XMargin))
-	ih = 2 * font.Default.Size()
-	ix = x*iw - (2 * XMargin)
+	w, h := font.Default.Size()
+	iw = 2 * w
+	ih = 2 * h
+	ix = x * iw
 	iy = y * ih
 	return
 }
@@ -67,7 +67,7 @@ func (g *Grid) Paint(x, y, cols, rows int, bg color.Color) {
 	op := &ebiten.DrawImageOptions{
 		CompositeMode: ebiten.CompositeModeCopy,
 	}
-	op.GeoM.Translate(float64(x+2*XMargin), float64(y))
+	op.GeoM.Translate(float64(x), float64(y))
 	g.img.DrawImage(background, op)
 }
 
@@ -81,18 +81,24 @@ func (g *Grid) Text(x, y, cols, rows int, data []rune, fg color.Color, inverted 
 	if inverted {
 		mode = ebiten.CompositeModeDestinationOut
 	}
-	for col, r := range data {
-		if col != 0 && (col%cols) == 0 {
-			x = xStart
-			y += yInc
+	i := 0
+	for row := 0; row < rows; row++ {
+		for col := 0; col < cols; col++ {
+			op := &ebiten.DrawImageOptions{
+				CompositeMode: mode,
+			}
+			op.GeoM.Scale(2, 2)
+			op.GeoM.Translate(float64(x), float64(y))
+			if i < len(data) {
+				g.img.DrawImage(f.Glyphs[data[i]].Image(), op)
+			} else {
+				g.img.DrawImage(f.Glyphs[0].Image(), op)
+			}
+			x += xInc
+			i++
 		}
-		op := &ebiten.DrawImageOptions{
-			CompositeMode: mode,
-		}
-		op.GeoM.Scale(2, 2)
-		op.GeoM.Translate(float64(x), float64(y))
-		g.img.DrawImage(f.Glyphs[r].Image(), op)
-		x += xInc
+		x = xStart
+		y += yInc
 	}
 }
 

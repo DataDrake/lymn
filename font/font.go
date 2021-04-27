@@ -20,11 +20,15 @@ import (
 	_ "embed" // required for embedding
 	"encoding/json"
 	"fmt"
+	"image"
 	"log"
 	"os"
 	"text/tabwriter"
 	"time"
 )
+
+// XMargin sets a per glyph clipping of Width/4 on the left and right of a glyph
+var XMargin int
 
 // Default is the Font to use for rendering things
 var Default *Font
@@ -42,6 +46,7 @@ func init() {
 	println()
 	LoadColors()
 	Default.SetPalette(Colors)
+	Default.Render()
 }
 
 // Font represents one or more glyphs belonging to a single face
@@ -51,21 +56,35 @@ type Font struct {
 	Date     time.Time `json:"date"`
 	Revision int       `json:"revision"`
 	Glyphs   []*Glyph  `json:"sprites"`
+	width    int
+	height   int
 }
 
 // NewFont decodes a Font from a embedded JSON file
 func NewFont(data []byte) (f *Font, err error) {
 	f = &Font{}
 	err = json.Unmarshal(data, f)
+	f.width = f.Glyphs[0].src.Stride
+	f.height = f.width
 	return
 }
 
 // SetPalette sets the color Palette for the Glyphs in this Font
 func (f *Font) SetPalette(p *Palette) {
-	for i, g := range f.Glyphs {
+	for _, g := range f.Glyphs {
 		g.SetPalette(p)
-		f.Glyphs[i] = g
 	}
+}
+
+// Render generates images for each Glyph to be later used in the rendering process
+func (f *Font) Render() {
+	f.width = f.height
+	XMargin = (f.height / 4) - 1
+	crop := image.Rect(XMargin, 0, f.width-XMargin, f.height)
+	for _, g := range f.Glyphs {
+		g.Render(crop)
+	}
+	f.width = f.height - 2*XMargin
 }
 
 // Describe summarizes a Font according to its metadata
@@ -80,6 +99,6 @@ func (f *Font) Describe() {
 }
 
 // Size returns the square dimension of each glyph
-func (f *Font) Size() int {
-	return f.Glyphs[0].src.Stride
+func (f *Font) Size() (width, height int) {
+	return f.width, f.height
 }
