@@ -22,20 +22,12 @@ import (
 )
 
 // characters contains all of the stats for characters
-var characters = map[string]Stats{
-	"Player": Stats{
-		"HP": 100,
-		"SP": 40,
-	},
-}
+var characters = make(map[string]Stats)
 
 // GetStats retrieves the stats of a character by name
-func GetStats(character string) Stats {
-	m, ok := characters[character]
-	if !ok {
-		log.Fatalf("Character does not exist: %s\n", character)
-	}
-	return m
+func GetStats(character string) (m Stats, ok bool) {
+	m, ok = characters[character]
+	return
 }
 
 // UpdateStats applies a list of stat changes

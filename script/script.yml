@@ -5,13 +5,24 @@ scenes:
     start:
         title: The Beginning
         location: Empty Room
-        start: begin
+        start: setup
         events:
+            setup:
+                - type: stats
+                  stats:
+                    - name: HP
+                      character: Player
+                      type: set
+                      value: 100
+                    - name: SP
+                      character: Player
+                      type: set
+                      value: 80
+                - type: event
+                  event: begin
             begin:
                 - type: text
-                  character: Narrator
-                  text: |
-                        You are standing in an empty room with one door.
+                  text: You are standing in an empty room with one door.
                 - type: choice
                   choices:
                     16:
@@ -26,12 +37,11 @@ scenes:
             die:
                 - type: stats
                   stats:
-                    - name: health
-                      character: player
+                    - name: HP
+                      character: Player
                       type: set
                       value: 0
                 - type: text
-                  character: Narrator
                   text: You have died a gruesome death. Would you like to try again?
                 - type: choice
                   choices:

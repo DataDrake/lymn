@@ -54,7 +54,10 @@ func (sb *Statbar) Draw(grid *Grid) {
 	if !sb.inited {
 		sb.init(grid)
 	}
-	stats := model.GetStats("Player")
+	stats, ok := model.GetStats("Player")
+	if !ok {
+		return
+	}
 	value := stats[sb.stat]
 	if sb.value == value {
 		return
