@@ -24,16 +24,18 @@ import (
 
 // Grid is a 2D matrix of text, rendered to an Image
 type Grid struct {
-	img *ebiten.Image
+	font *font.Font
+	img  *ebiten.Image
 }
 
 // NewGrid creates an empty Grid of max size
-func NewGrid(cols, rows int) (g *Grid) {
-	width, height := font.Default.Size()
+func NewGrid(cols, rows int, glyphs *font.Font) (g *Grid) {
+	width, height := glyphs.Size()
 	width *= 2 * cols
 	height *= 2 * rows
 	g = &Grid{
-		img: ebiten.NewImage(width, height),
+		font: glyphs,
+		img:  ebiten.NewImage(width, height),
 	}
 	return
 }
@@ -44,7 +46,7 @@ func (g *Grid) Draw(screen *ebiten.Image) {
 }
 
 func (g *Grid) calcXY(x, y int) (ix, iy, iw, ih int) {
-	w, h := font.Default.Size()
+	w, h := g.font.Size()
 	iw = 2 * w
 	ih = 2 * h
 	ix = x * iw
@@ -69,7 +71,6 @@ func (g *Grid) Text(x, y, cols, rows int, data []rune, fg color.Color, inverted 
 	g.Paint(x, y, cols, rows, fg)
 	xStart, y, xInc, yInc := g.calcXY(x, y)
 	x = xStart
-	f := font.Default
 	mode := ebiten.CompositeModeDestinationIn
 	if inverted {
 		mode = ebiten.CompositeModeDestinationOut
@@ -83,9 +84,9 @@ func (g *Grid) Text(x, y, cols, rows int, data []rune, fg color.Color, inverted 
 			op.GeoM.Scale(2, 2)
 			op.GeoM.Translate(float64(x), float64(y))
 			if i < len(data) {
-				g.img.DrawImage(f.Glyphs[data[i]].Image(), op)
+				g.img.DrawImage(g.font.Glyphs[data[i]].Image(), op)
 			} else {
-				g.img.DrawImage(f.Glyphs[0].Image(), op)
+				g.img.DrawImage(g.font.Glyphs[0].Image(), op)
 			}
 			x += xInc
 			i++

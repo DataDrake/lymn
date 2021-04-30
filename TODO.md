@@ -2,23 +2,31 @@
 
 ## Jam Prep
 
-- [ ] main.go cleanup
+- [x] main.go cleanup
     - [x] Move Game to game.go
     - [x] Move Game UI bits to ui/window.go
-    - [ ] Script gets given to Game on creation
-    - [ ] Font gets given to Game on creation
-    - [ ] Move script.yml and font.json to example/
-    - [ ] Load Script and Font in main.go
-    - [ ] Allow main.go to register Stat bars for the player
+    - [x] Script gets given to Game on creation
+    - [x] Font gets given to Game on creation
+        - [x] Palette can be changed at startup
+    - [x] Move script.yml, palette.json, font.json to example/
+    - [x] Load Script, Palette, and Font in main.go
+    - [x] Allow main.go to register Stat bars for the player
 - [x] UI cleanup
     - [x] Create ui.Window
     - [x] Give ui.Window dimensions
     - [x] ui.Window.Size() -> grid.Size()
     - [x] Rework UI elements to have X,Y coordinates and fixed sizes
+    - [x] Create PlayerStats
+        - [x] Allow up to 3 Statbars to be registered
+
+## Post Jam
+
+- [ ] Conditional Events (based on character Stats)
 - [ ] Items
     - [ ] model: Allow Player to hold items
     - [ ] engine: Add Item type for Events
     - [ ] ui: New Item List on right side
+- [ ] UI theming
 
 ## UI
 

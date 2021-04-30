@@ -20,7 +20,7 @@ all: build
 
 build:
 	@$(call stage,BUILD)
-	@$(GOBUILD)
+	@$(GOBUILD) -o $(PKGNAME) example/main.go
 	@$(call pass,BUILD)
 
 build-wasm:
@@ -30,7 +30,7 @@ build-wasm:
 
 build-windows:
 	@$(call stage,BUILD)
-	@GOOS=windows $(GOBUILD)
+	@GOOS=windows $(GOBUILD) -o $(PKGNAME).exe example/main.go
 	@$(call pass,BUILD)
 
 test: build

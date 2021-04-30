@@ -14,26 +14,39 @@
 // limitations under the License.
 //
 
-package script
+package ui
 
 import (
-	"gopkg.in/yaml.v3"
-	"log"
+	"image/color"
 )
 
-// Script provides all of the information needed for the Engine to run
-type Script struct {
-	Title  string `yaml:"title"`
-	Author string `yaml:"author"`
-	Date   string `yaml:"date"`
-	Start  string `yaml:"start"`
-	Scenes Scenes `yaml:"scenes"`
+// Player presents player stats to the player
+type Player struct {
+	x, y   int
+	label  color.Color
+	stats  []*Statbar
+	inited bool
 }
 
-// Decode parses an embedded Script from raw bytes
-func Decode(raw []byte) (s Script) {
-	if err := yaml.Unmarshal(raw, &s); err != nil {
-		log.Fatalf("Failed to decode script: %s\n", err)
+// NewPlayer creates a new filled Player
+func NewPlayer(x, y int, label color.Color) *Player {
+	return &Player{
+		x:     x,
+		y:     y,
+		label: label,
 	}
-	return
+}
+
+// Draw renders a Player
+func (p *Player) Draw(grid *Grid) {
+	for _, stat := range p.stats {
+		stat.Draw(grid)
+	}
+}
+
+// AddStat registers a stat for the Player to render
+func (p *Player) AddStat(name string, max int) {
+	y := p.y + len(p.stats)
+	sb := NewStatbar(p.x, y, name, max, p.label)
+	p.stats = append(p.stats, sb)
 }

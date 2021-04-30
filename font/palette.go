@@ -17,7 +17,6 @@
 package font
 
 import (
-	_ "embed" // required for embedding things
 	"encoding/json"
 	"fmt"
 	"github.com/DataDrake/ld48/font/encoding"
@@ -26,23 +25,6 @@ import (
 	"text/tabwriter"
 	"time"
 )
-
-// Colors are the colors to use for all sprites
-var Colors *Palette
-
-//go:embed palette.json
-var rawColors []byte
-
-// LoadColors decodes the built-in color palette
-func LoadColors() {
-	var err error
-	Colors, err = NewPalette(rawColors)
-	if err != nil {
-		log.Fatal(err)
-	}
-	Colors.Describe()
-	println()
-}
 
 // Palette is a color picker for a Palette of colors
 type Palette struct {
@@ -53,10 +35,12 @@ type Palette struct {
 	Colors   encoding.Colors `json:"colors"`
 }
 
-// NewPalette decodes a Palette from an embedded JSON file and unmarshals it
-func NewPalette(data []byte) (p *Palette, err error) {
+// DecodePalette decodes a Palette from an embedded JSON file and unmarshals it
+func DecodePalette(raw []byte) (p *Palette) {
 	p = &Palette{}
-	err = json.Unmarshal(data, p)
+	if err := json.Unmarshal(raw, p); err != nil {
+		log.Fatal(err.Error())
+	}
 	return
 }
 

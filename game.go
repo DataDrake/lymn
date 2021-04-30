@@ -14,11 +14,12 @@
 // limitations under the License.
 //
 
-package main
+package ld48
 
 import (
 	"fmt"
 	"github.com/DataDrake/ld48/engine"
+	"github.com/DataDrake/ld48/font"
 	"github.com/DataDrake/ld48/input"
 	"github.com/DataDrake/ld48/script"
 	"github.com/DataDrake/ld48/ui"
@@ -37,11 +38,10 @@ type Game struct {
 }
 
 // NewGame creates a Game and populates the UI
-func NewGame() (g *Game) {
-	s := script.Load()
+func NewGame(s script.Script, f *font.Font) (g *Game) {
 	g = &Game{
 		script: s,
-		window: ui.NewWindow(40, 20),
+		window: ui.NewWindow(40, 20, f),
 		engine: engine.NewEngine(s),
 		last:   time.Now(),
 	}
@@ -54,6 +54,11 @@ func (g *Game) Update() error {
 	input.Update()
 	g.engine.Update()
 	return nil
+}
+
+// DisplayStat adds a Player stat tp the Window
+func (g *Game) DisplayStat(name string, max int) {
+	g.window.DisplayStat(name, max)
 }
 
 // Draw renders Game to a screen

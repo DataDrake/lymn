@@ -16,7 +16,33 @@
 
 package main
 
+import (
+	_ "embed" // needed for embeddable data
+	"github.com/DataDrake/ld48"
+	"github.com/DataDrake/ld48/font"
+	"github.com/DataDrake/ld48/script"
+)
+
+//go:embed script.yml
+var rawScript []byte
+
+//go:embed palette.json
+var rawPalette []byte
+
+//go:embed font.json
+var rawFont []byte
+
 func main() {
-	g := NewGame()
+	s := script.Decode(rawScript)
+	p := font.DecodePalette(rawPalette)
+	p.Describe()
+	f := font.Decode(rawFont)
+	f.Describe()
+	f.SetPalette(p)
+	f.Render()
+	g := ld48.NewGame(s, f)
+	g.DisplayStat("HP", 100)
+	g.DisplayStat("SP", 100)
+	g.DisplayStat("MP", 100)
 	g.Play()
 }

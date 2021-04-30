@@ -17,7 +17,6 @@
 package font
 
 import (
-	_ "embed" // required for embedding
 	"encoding/json"
 	"fmt"
 	"image"
@@ -30,25 +29,6 @@ import (
 // XMargin sets a per glyph clipping of Width/4 on the left and right of a glyph
 var XMargin int
 
-// Default is the Font to use for rendering things
-var Default *Font
-
-//go:embed font.json
-var rawFont []byte
-
-func init() {
-	var err error
-	Default, err = NewFont(rawFont)
-	if err != nil {
-		log.Fatal(err)
-	}
-	Default.Describe()
-	println()
-	LoadColors()
-	Default.SetPalette(Colors)
-	Default.Render()
-}
-
 // Font represents one or more glyphs belonging to a single face
 type Font struct {
 	Name     string    `json:"name"`
@@ -60,10 +40,12 @@ type Font struct {
 	height   int
 }
 
-// NewFont decodes a Font from a embedded JSON file
-func NewFont(data []byte) (f *Font, err error) {
+// Decode a Font from a embedded JSON file
+func Decode(raw []byte) (f *Font) {
 	f = &Font{}
-	err = json.Unmarshal(data, f)
+	if err := json.Unmarshal(raw, f); err != nil {
+		log.Fatal(err.Error())
+	}
 	f.width = f.Glyphs[0].src.Stride
 	f.height = f.width
 	return
