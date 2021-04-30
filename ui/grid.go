@@ -22,23 +22,16 @@ import (
 	"image/color"
 )
 
-const (
-	// Cols specifies the width of the display in characters
-	Cols = 40
-	// Rows specifies the height of the dispaly in characters
-	Rows = 20
-)
-
 // Grid is a 2D matrix of text, rendered to an Image
 type Grid struct {
 	img *ebiten.Image
 }
 
 // NewGrid creates an empty Grid of max size
-func NewGrid() (g *Grid) {
+func NewGrid(cols, rows int) (g *Grid) {
 	width, height := font.Default.Size()
-	width *= 2 * Cols
-	height *= 2 * Rows
+	width *= 2 * cols
+	height *= 2 * rows
 	g = &Grid{
 		img: ebiten.NewImage(width, height),
 	}

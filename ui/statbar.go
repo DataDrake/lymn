@@ -44,7 +44,7 @@ func NewStatbar(x, y int, stat string, max int, label color.Color) (sb *Statbar)
 
 func (sb *Statbar) init(grid *Grid) {
 	grid.Text(sb.x, sb.y, len(sb.stat), 1, []rune(sb.stat), sb.label, false)
-	bar := []rune{2, 1, 1, 1, 1, 1, 1, 1, 1, 3}
+	bar := []rune{2, 1, 1, 1, 3}
 	grid.Text(sb.x+len(sb.stat)+1, sb.y, len(bar), 1, bar, sb.label, false)
 	sb.inited = true
 }
@@ -64,24 +64,24 @@ func (sb *Statbar) Draw(grid *Grid) {
 	}
 	sb.value = value
 	percent := float64(value*100) / float64(sb.max)
-	bar := make([]rune, 10)
+	bar := make([]rune, 5)
 	idx := 0
-	for i := 10; i <= 100; i += 10 {
+	for i := 20; i <= 100; i += 20 {
 		part := float64(i) - percent
 		switch {
 		case part <= 0.0:
 			bar[idx] = 7
-		case part <= 2.5:
-			bar[idx] = 6
 		case part <= 5.0:
+			bar[idx] = 6
+		case part <= 10.0:
 			bar[idx] = 5
-		case part <= 7.5:
+		case part <= 15.0:
 			bar[idx] = 4
 		default:
 			switch idx {
 			case 0:
 				bar[idx] = 2
-			case 9:
+			case 4:
 				bar[idx] = 3
 			default:
 				bar[idx] = 1

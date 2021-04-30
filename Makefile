@@ -66,5 +66,5 @@ uninstall:
 clean:
 	@$(call stage,CLEAN)
 	@$(call task,Removing executable...)
-	@rm $(PKGNAME)
+	@rm $(PKGNAME)*
 	@$(call pass,CLEAN)

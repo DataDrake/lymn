@@ -24,13 +24,18 @@ import (
 
 // Choices is a wheel that prints available choices
 type Choices struct {
-	bg color.Color
+	x, y int
+	cols int
+	bg   color.Color
 }
 
 // NewChoices creates a new empty Choices of a specific color
-func NewChoices(bg color.Color) (cs *Choices) {
+func NewChoices(x, y, cols int, bg color.Color) (cs *Choices) {
 	return &Choices{
-		bg: bg,
+		x:    x,
+		y:    y,
+		cols: cols,
+		bg:   bg,
 	}
 }
 
@@ -44,26 +49,26 @@ func (cs *Choices) Draw(grid *Grid) {
 	switch len(choices) {
 	case 4:
 		choice := choices[3]
-		for margin := (14 - len(choice)) / 2; margin > 0; margin-- {
+		for margin := (cs.cols - len(choice)) / 2; margin > 0; margin-- {
 			rows[2] += " "
 		}
 		rows[2] += choice
 		fallthrough
 	case 3:
 		choice := choices[2]
-		for margin := (14 - len(choice)) / 2; margin > 0; margin-- {
+		for margin := (cs.cols - len(choice)) / 2; margin > 0; margin-- {
 			rows[0] += " "
 		}
 		rows[0] += choice
 		fallthrough
 	case 2:
 		rows[1] = choices[0] + "  " + choices[1]
-		for margin := 6 - len(choices[0]); margin > 0; margin-- {
+		for margin := (cs.cols/2 - 1) - len(choices[0]); margin > 0; margin-- {
 			rows[1] = " " + rows[1]
 		}
 	case 1:
 		rows[1] += choices[0]
-		for margin := (14 - len(choices[0])) / 2; margin > 0; margin-- {
+		for margin := (cs.cols - len(choices[0])) / 2; margin > 0; margin-- {
 			rows[1] += " "
 		}
 	case 0:
@@ -72,6 +77,6 @@ func (cs *Choices) Draw(grid *Grid) {
 		log.Fatal("Only 1-4 choices can be displayed")
 	}
 	for i, row := range rows {
-		grid.Text(16, Rows-4+i, 14, 1, []rune(row), cs.bg, false)
+		grid.Text(cs.x, cs.y+i, cs.cols, 1, []rune(row), cs.bg, false)
 	}
 }

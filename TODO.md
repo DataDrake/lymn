@@ -1,5 +1,25 @@
 # TODO
 
+## Jam Prep
+
+- [ ] main.go cleanup
+    - [x] Move Game to game.go
+    - [x] Move Game UI bits to ui/window.go
+    - [ ] Script gets given to Game on creation
+    - [ ] Font gets given to Game on creation
+    - [ ] Move script.yml and font.json to example/
+    - [ ] Load Script and Font in main.go
+    - [ ] Allow main.go to register Stat bars for the player
+- [x] UI cleanup
+    - [x] Create ui.Window
+    - [x] Give ui.Window dimensions
+    - [x] ui.Window.Size() -> grid.Size()
+    - [x] Rework UI elements to have X,Y coordinates and fixed sizes
+- [ ] Items
+    - [ ] model: Allow Player to hold items
+    - [ ] engine: Add Item type for Events
+    - [ ] ui: New Item List on right side
+
 ## UI
 
 - [x] Titlebar

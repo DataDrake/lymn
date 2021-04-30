@@ -23,19 +23,24 @@ import (
 
 // Titlebar is a topbar which prints both a Title and Location
 type Titlebar struct {
+	x, y   int
+	cols   int
 	bg     color.Color
 	inited bool
 }
 
 // NewTitlebar creates a new empty titlebar of a specific color
-func NewTitlebar(bg color.Color) (tb *Titlebar) {
+func NewTitlebar(x, y, cols int, bg color.Color) (tb *Titlebar) {
 	return &Titlebar{
-		bg: bg,
+		x:    x,
+		y:    y,
+		cols: cols,
+		bg:   bg,
 	}
 }
 
 func (tb *Titlebar) init(grid *Grid) {
-	grid.Paint(0, 0, Cols, 1, tb.bg)
+	grid.Paint(tb.x, tb.y, tb.cols, 1, tb.bg)
 	tb.inited = true
 }
 
@@ -49,15 +54,15 @@ func (tb *Titlebar) Draw(grid *Grid) {
 	}
 	title, loc := model.GetScene()
 	l := len(title) + len(loc)
-	max := Cols - 2
+	max := tb.cols - 2
 	if l > max {
-		grid.Text(1, 0, len(title), 1, []rune(title), tb.bg, true)
+		grid.Text(tb.x+1, tb.y, len(title), 1, []rune(title), tb.bg, true)
 	} else {
 		// pad spaces to align Location right
 		for i := max - l; i > 0; i-- {
 			title += " "
 		}
 		title += loc
-		grid.Text(1, 0, len(title), 1, []rune(title), tb.bg, true)
+		grid.Text(tb.x+1, tb.y, len(title), 1, []rune(title), tb.bg, true)
 	}
 }

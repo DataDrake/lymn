@@ -14,9 +14,15 @@
 // limitations under the License.
 //
 
-package main
+package ui
 
-func main() {
-	g := NewGame()
-	g.Play()
-}
+import (
+	"image/color"
+)
+
+var (
+	blue  = color.RGBA{0x00, 0x00, 0xFF, 0xFF}
+	cyan  = color.RGBA{0x00, 0xFF, 0xFF, 0xFF}
+	green = color.RGBA{0x00, 0xFF, 0x00, 0xFF}
+	red   = color.RGBA{0xFF, 0x00, 0x00, 0xFF}
+)
