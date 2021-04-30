@@ -17,7 +17,7 @@
 package engine
 
 import (
-	"github.com/DataDrake/ld48/script"
+	"github.com/DataDrake/lymn/script"
 )
 
 // Engine carries out all of the game logic according to a Script

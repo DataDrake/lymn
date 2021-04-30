@@ -17,7 +17,7 @@
 package kbd
 
 import (
-	"github.com/DataDrake/ld48/model"
+	"github.com/DataDrake/lymn/model"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 

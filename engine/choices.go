@@ -17,8 +17,8 @@
 package engine
 
 import (
-	"github.com/DataDrake/ld48/model"
-	"github.com/DataDrake/ld48/script"
+	"github.com/DataDrake/lymn/model"
+	"github.com/DataDrake/lymn/script"
 	"log"
 	"os"
 )

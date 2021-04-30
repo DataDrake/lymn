@@ -17,7 +17,7 @@
 package model
 
 import (
-	"github.com/DataDrake/ld48/script"
+	"github.com/DataDrake/lymn/script"
 	"log"
 )
 

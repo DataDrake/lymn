@@ -17,7 +17,7 @@
 package ui
 
 import (
-	"github.com/DataDrake/ld48/font"
+	"github.com/DataDrake/lymn/font"
 	"github.com/hajimehoshi/ebiten/v2"
 	"image/color"
 )

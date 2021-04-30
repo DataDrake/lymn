@@ -18,7 +18,7 @@ package font
 
 import (
 	"encoding/json"
-	"github.com/DataDrake/ld48/font/encoding"
+	"github.com/DataDrake/lymn/font/encoding"
 	"github.com/hajimehoshi/ebiten/v2"
 	"image"
 	"image/color"

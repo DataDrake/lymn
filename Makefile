@@ -1,4 +1,4 @@
-PKGNAME    = ld48
+PKGNAME    = lymn
 DESTDIR   ?=
 PREFIX    ?= /usr
 BINDIR     = $(PREFIX)/bin

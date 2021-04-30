@@ -17,7 +17,7 @@
 package engine
 
 import (
-	"github.com/DataDrake/ld48/model"
+	"github.com/DataDrake/lymn/model"
 )
 
 // updateStats performs stat modifications and then forces a UI refresh

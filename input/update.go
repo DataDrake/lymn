@@ -17,7 +17,7 @@
 package input
 
 import (
-	"github.com/DataDrake/ld48/input/kbd"
+	"github.com/DataDrake/lymn/input/kbd"
 )
 
 // Update updates all input sources

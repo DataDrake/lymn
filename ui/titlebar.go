@@ -17,7 +17,7 @@
 package ui
 
 import (
-	"github.com/DataDrake/ld48/model"
+	"github.com/DataDrake/lymn/model"
 	"image/color"
 )
 

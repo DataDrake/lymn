@@ -14,15 +14,15 @@
 // limitations under the License.
 //
 
-package ld48
+package lymn
 
 import (
 	"fmt"
-	"github.com/DataDrake/ld48/engine"
-	"github.com/DataDrake/ld48/font"
-	"github.com/DataDrake/ld48/input"
-	"github.com/DataDrake/ld48/script"
-	"github.com/DataDrake/ld48/ui"
+	"github.com/DataDrake/lymn/engine"
+	"github.com/DataDrake/lymn/font"
+	"github.com/DataDrake/lymn/input"
+	"github.com/DataDrake/lymn/script"
+	"github.com/DataDrake/lymn/ui"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"log"

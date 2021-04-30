@@ -19,7 +19,7 @@ package font
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/DataDrake/ld48/font/encoding"
+	"github.com/DataDrake/lymn/font/encoding"
 	"log"
 	"os"
 	"text/tabwriter"

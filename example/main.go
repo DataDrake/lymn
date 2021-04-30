@@ -18,9 +18,9 @@ package main
 
 import (
 	_ "embed" // needed for embeddable data
-	"github.com/DataDrake/ld48"
-	"github.com/DataDrake/ld48/font"
-	"github.com/DataDrake/ld48/script"
+	"github.com/DataDrake/lymn"
+	"github.com/DataDrake/lymn/font"
+	"github.com/DataDrake/lymn/script"
 )
 
 //go:embed script.yml
@@ -40,7 +40,7 @@ func main() {
 	f.Describe()
 	f.SetPalette(p)
 	f.Render()
-	g := ld48.NewGame(s, f)
+	g := lymn.NewGame(s, f)
 	g.DisplayStat("HP", 100)
 	g.DisplayStat("SP", 100)
 	g.DisplayStat("MP", 100)

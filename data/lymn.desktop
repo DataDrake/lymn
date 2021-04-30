@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=LD48
-Comment=My entry into the LD48 Jam
-Exec=ld48
+Name=lymn
+Comment=Example lymn game
+Exec=lymn
 Terminal=false
 Type=Application
-Icon=ld48
+Icon=lymn
 Categories=Game;AdventureGame;
