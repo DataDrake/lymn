@@ -33,7 +33,7 @@ type Engine struct {
 		next  string
 		index int
 	}
-	choice rune
+	choice int
 }
 
 // NewEngine creates an Engine that is ready to go

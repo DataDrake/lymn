@@ -78,7 +78,6 @@ func (sb *Statbar) Draw(grid *Grid) {
 		case part <= 7.5:
 			bar[idx] = 4
 		default:
-			println(idx)
 			switch idx {
 			case 0:
 				bar[idx] = 2

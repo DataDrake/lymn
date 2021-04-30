@@ -17,6 +17,7 @@
 package kbd
 
 import (
+	"github.com/DataDrake/ld48/model"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -25,6 +26,44 @@ type Listener func(key ebiten.Key)
 
 // listeners contains all of the currently Registered listeners
 var listeners = make(map[ebiten.Key]Listener)
+
+func init() {
+	Register(ebiten.KeySpace, unpause)
+
+	Register(ebiten.Key1, choose)
+	Register(ebiten.Key2, choose)
+	Register(ebiten.Key3, choose)
+	Register(ebiten.Key4, choose)
+
+	Register(ebiten.KeyW, choose)
+	Register(ebiten.KeyA, choose)
+	Register(ebiten.KeyS, choose)
+	Register(ebiten.KeyD, choose)
+
+	Register(ebiten.KeyUp, choose)
+	Register(ebiten.KeyDown, choose)
+	Register(ebiten.KeyLeft, choose)
+	Register(ebiten.KeyRight, choose)
+}
+
+func choose(key ebiten.Key) {
+	switch key {
+	case ebiten.Key1, ebiten.KeyA, ebiten.KeyLeft:
+		model.SetChoice(0)
+	case ebiten.Key2, ebiten.KeyW, ebiten.KeyUp:
+		model.SetChoice(2)
+	case ebiten.Key3, ebiten.KeyD, ebiten.KeyRight:
+		model.SetChoice(1)
+	case ebiten.Key4, ebiten.KeyS, ebiten.KeyDown:
+		model.SetChoice(3)
+	default:
+		// do nothing
+	}
+}
+
+func unpause(_ ebiten.Key) {
+	model.UnpauseText()
+}
 
 // Register associates a KeyListener with a specific Key
 func Register(key ebiten.Key, listener Listener) {

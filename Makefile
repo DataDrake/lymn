@@ -3,8 +3,6 @@ DESTDIR   ?=
 PREFIX    ?= /usr
 BINDIR     = $(PREFIX)/bin
 
-GOPROJROOT  = $(GOSRC)/$(PROJREPO)
-
 GOLDFLAGS   = -ldflags "-s -w"
 GOCC        = go
 GOFMT       = $(GOCC) fmt -x
@@ -23,6 +21,16 @@ all: build
 build:
 	@$(call stage,BUILD)
 	@$(GOBUILD)
+	@$(call pass,BUILD)
+
+build-wasm:
+	@$(call stage,BUILD)
+	@GOOS=js GOARCH=wasm $(GOBUILD) -o $(PKGNAME).wasm github.com/DataDrake/$(PKGNAME)
+	@$(call pass,BUILD)
+
+build-windows:
+	@$(call stage,BUILD)
+	@GOOS=windows $(GOBUILD)
 	@$(call pass,BUILD)
 
 test: build

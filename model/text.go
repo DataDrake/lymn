@@ -54,5 +54,5 @@ func TextPaused() bool {
 
 // UnpauseText clear a pause on text rendering
 func UnpauseText() {
-	text.paused = true
+	text.paused = false
 }

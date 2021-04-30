@@ -23,17 +23,19 @@ scenes:
             begin:
                 - type: text
                   text: You are standing in an empty room with one door.
+                - type: text
+                  text: Make a decision.
                 - type: choice
                   choices:
-                    16:
-                        type: event
-                        value: die
-                    17:
-                        type: event
-                        value: look
-                    18:
-                        type: scene
-                        value: room2
+                    - name: Die
+                      type: event
+                      value: die
+                    - name: Look
+                      type: event
+                      value: look
+                    - name: Exit
+                      type: scene
+                      value: room2
             die:
                 - type: stats
                   stats:
@@ -45,11 +47,11 @@ scenes:
                   text: You have died a gruesome death. Would you like to try again?
                 - type: choice
                   choices:
-                    31:
-                        type: scene
-                        value: start
-                    32:
-                        type: quit
+                    - name: Yes
+                      type: scene
+                      value: start
+                    - name: No
+                      type: quit
     room2:
         title: The Descent
         location: Dark Room
@@ -59,3 +61,6 @@ scenes:
                 - type: text
                   character: ???
                   text: Who goes there?!?
+                - type: text
+                  character: ???
+                  text: It is I, bob.

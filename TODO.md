@@ -16,11 +16,10 @@
         - [x] Text Label
         - [x] ProgressBar (with colors)
             - [x] Add Glyphs for empty portion of the bar
-- [ ] DialogueOptions
-    - [ ] Prompt for continuation of text
-    - [ ] Display Choices
+- [x] DialogueOptions
+    - [x] Prompt for continuation of text
+    - [x] Display Choices
     - [ ] Allow selection of Choice with Mouse and Keyboard
-    - [ ] New Glyphs for Choices
 
 ## Scripting
  - [x] Defined data types

@@ -30,6 +30,7 @@ var (
 type Textbox struct {
 	bg     color.Color
 	inited bool
+	paused bool
 }
 
 // NewTextbox creates a new empty textbox of a specific color
@@ -71,15 +72,22 @@ func (tb *Textbox) Draw(grid *Grid) {
 	if !model.HasTextChanged() {
 		return
 	}
+	rows := TextRows
 	if model.TextPaused() {
-		return
+		if tb.paused {
+			return
+		}
+		grid.Text(Cols-4, TextRows, 3, 1, []rune("..."), tb.bg, false)
+		rows -= 2
+		tb.paused = true
 	}
+	tb.paused = false
 	character, value := model.GetText()
 	if len(character) > 0 {
 		character = " " + character + " "
 		grid.Text(1, 2, len(character), 1, []rune(character), tb.bg, true)
-		grid.Text(1, 4, Cols-2, TextRows-3, []rune(value), tb.bg, false)
+		grid.Text(1, 4, Cols-2, rows-3, []rune(value), tb.bg, false)
 	} else {
-		grid.Text(1, 2, Cols-2, TextRows-1, []rune(value), tb.bg, false)
+		grid.Text(1, 2, Cols-2, rows-1, []rune(value), tb.bg, false)
 	}
 }

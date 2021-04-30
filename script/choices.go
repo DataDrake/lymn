@@ -30,9 +30,10 @@ const (
 
 // Choice represents a scripted Choice theat a Player made
 type Choice struct {
+	Name  string     `yaml:"name"`
 	Type  ChoiceKind `yaml:"type"`
 	Value string     `yaml:"value"`
 }
 
-// Choices relates the rune used to display the Choice to the Choice it selects
-type Choices map[rune]Choice
+// Choices relates a used to display the Choice to the Choice it selects
+type Choices []Choice

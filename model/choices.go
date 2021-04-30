@@ -18,40 +18,20 @@ package model
 
 import (
 	"github.com/DataDrake/ld48/script"
-	"sort"
 )
-
-// Runes is used to provide a sorted list of rune
-type Runes []rune
-
-// Len provides the length of the list
-func (r Runes) Len() int {
-	return len(r)
-}
-
-// Less returns true if a rune has a lower codepoint
-func (r Runes) Less(i, j int) bool {
-	return r[i] < r[j]
-}
-
-// Swap exchanges elements when sorting
-func (r Runes) Swap(i, j int) {
-	r[i], r[j] = r[j], r[i]
-}
 
 // choices contains a list of the available choices
 var choices struct {
-	list    Runes
+	list    []string
 	changed bool
 }
 
 // SetChoices changes the list of available choices
 func SetChoices(next script.Choices) {
-	choices.list = make(Runes, len(next))
-	for r := range next {
-		choices.list = append(choices.list, r)
+	choices.list = make([]string, 0)
+	for _, choice := range next {
+		choices.list = append(choices.list, choice.Name)
 	}
-	sort.Sort(choices.list)
 	choices.changed = true
 }
 
@@ -61,35 +41,35 @@ func HaveChoicesChanged() bool {
 }
 
 // GetChoices returns the list of Choices and clears the changed attribute
-func GetChoices() Runes {
+func GetChoices() []string {
 	choices.changed = false
 	return choices.list
 }
 
 // ClearChoices resets the choices list
 func ClearChoices() {
-	choices.list = make(Runes, 0)
+	choices.list = make([]string, 0)
 	choices.changed = true
 }
 
 // choice keeps track of the selected choice
 var choice struct {
-	value rune
+	index int
 	set   bool
 }
 
 // SetChoice changes the selected choice
-func SetChoice(value rune) {
-	choice.value = value
+func SetChoice(index int) {
+	choice.index = index
 	choice.set = true
 }
 
 // GetChoice returns the choice if it is set
-func GetChoice() (value rune, ok bool) {
+func GetChoice() (index int, ok bool) {
 	if !choice.set {
 		return
 	}
-	value = choice.value
+	index = choice.index
 	ok = true
 	choice.set = false
 	return

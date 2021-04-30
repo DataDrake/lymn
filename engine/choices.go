@@ -49,11 +49,12 @@ func waitChoice(e *Engine) bool {
 // decodeChoice executes the current Choice
 func decodeChoice(e *Engine) bool {
 	choices := e.getChoices()
-	choice, ok := choices[e.choice]
-	if !ok {
-		log.Fatalf("missing choice: %#v\n", e.choice)
+	if e.choice > len(choices) {
+		log.Fatalf("missing choice: %d\n", e.choice)
 	}
+	choice := choices[e.choice]
 	model.ClearChoices()
+	e.event.index++
 	switch choice.Type {
 	case script.ChoiceScene:
 		e.scene.next = choice.Value
