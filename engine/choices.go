@@ -31,6 +31,8 @@ func (e *Engine) getChoices() script.Choices {
 // printChoices sets the choices to be displayed
 func printChoices(e *Engine) bool {
 	model.SetChoices(e.getChoices())
+	event := e.getEvent()
+	model.SetText(event.Character, event.Text)
 	e.state = waitChoice
 	return true // Need to display choices to Player
 }

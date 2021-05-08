@@ -42,6 +42,24 @@ func UpdateStats(stats script.Stats) {
 	}
 }
 
+// CheckStats evaluates a Conditional for against stats
+func CheckStats(cond *script.Conditional) bool {
+	if cond == nil {
+		return true
+	}
+	for _, part := range *cond {
+		m, ok := characters[part.Character]
+		if !ok {
+			log.Printf("Missing character %s during conditional check\n", part.Character)
+			return false
+		}
+		if !m.Check(part) {
+			return false
+		}
+	}
+	return true
+}
+
 // Stats stores all of the stats related to a character
 type Stats map[string]int
 
@@ -59,4 +77,19 @@ func (s Stats) Apply(stat script.Stat) {
 	default:
 		log.Fatalf("Invalid stat type: %s\n", stat.Type)
 	}
+}
+
+// Check evaluates a Condition against this Stat
+func (s Stats) Check(cond script.Condition) bool {
+	switch cond.Type {
+	case script.CondEqual:
+		return s[cond.Stat] == cond.Value
+	case script.CondLess:
+		return s[cond.Stat] < cond.Value
+	case script.CondGreater:
+		return s[cond.Stat] > cond.Value
+	default:
+		log.Fatalf("Invalid condition type: %s\n", cond.Type)
+	}
+	return false
 }

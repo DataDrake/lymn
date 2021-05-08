@@ -16,27 +16,25 @@
 
 package script
 
-// Stat represents a scripted modification to a character's stats
-type Stat struct {
+// Condition represents a scripted examination of a character's stats
+type Condition struct {
 	Character string   `yaml:"character"`
-	Name      string   `yaml:"stat"`
-	Type      StatKind `yaml:"type"`
+	Stat      string   `yaml:"stat"`
+	Type      CondKind `yaml:"type"`
 	Value     int      `yaml:"value"`
 }
 
-// StatKind enumerates all of the available types of Stat modification
-type StatKind string
+// CondKind enumerates all of the available types of Condition checks
+type CondKind string
 
 const (
-	// StatClear removes a Stat and can be used to clear status effects
-	StatClear StatKind = "clear"
-	// StatSet overwrites the value of a Stat
-	StatSet StatKind = "set"
-	// StatAdd increments the value of a Stat by the specified number
-	StatAdd StatKind = "add"
-	// StatSub decrements the value of a Stat be the specified number
-	StatSub StatKind = "sub"
+	// CondEqual checks for an exact match
+	CondEqual CondKind = "equal"
+	// CondLess checks for less than value
+	CondLess CondKind = "less"
+	// CondGreater checks for greater than value
+	CondGreater CondKind = "greater"
 )
 
-// Stats contains a list of Stat operations to be carried out
-type Stats []Stat
+// Conditional contains a list of Condition checks to be carried out
+type Conditional []Condition

@@ -17,6 +17,7 @@
 package engine
 
 import (
+	"github.com/DataDrake/lymn/model"
 	"github.com/DataDrake/lymn/script"
 	"log"
 )
@@ -51,6 +52,10 @@ func loadEvent(e *Engine) bool {
 // decodeEvent executes the current Event
 func decodeEvent(e *Engine) bool {
 	event := e.getEvent()
+	if !model.CheckStats(event.Condition) {
+		e.event.index++
+		return false
+	}
 	switch event.Type {
 	case script.EventText:
 		e.state = printText

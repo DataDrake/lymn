@@ -33,6 +33,7 @@ func SetChoices(next script.Choices) {
 		choices.list = append(choices.list, choice.Name)
 	}
 	choices.changed = true
+	choice.set = false
 }
 
 // HaveChoicesChanged checks if any changes have been made to the choices
@@ -60,8 +61,10 @@ var choice struct {
 
 // SetChoice changes the selected choice
 func SetChoice(index int) {
-	choice.index = index
-	choice.set = true
+	if index < len(choices.list) {
+		choice.index = index
+		choice.set = true
+	}
 }
 
 // GetChoice returns the choice if it is set

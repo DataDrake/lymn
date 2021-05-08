@@ -18,7 +18,6 @@ package engine
 
 import (
 	"github.com/DataDrake/lymn/model"
-	"github.com/DataDrake/lymn/script"
 )
 
 // printText sets the text to be displayed, pausinging if the next even involves text
@@ -27,12 +26,8 @@ func printText(e *Engine) bool {
 	model.SetText(event.Character, event.Text)
 	e.event.index++
 	event = e.getEvent()
-	if event.Type == script.EventText {
-		model.PauseText()
-		e.state = waitText
-	} else {
-		e.state = decodeEvent
-	}
+	model.PauseText()
+	e.state = waitText
 	return true // Need to update the displayed text
 }
 
@@ -41,6 +36,6 @@ func waitText(e *Engine) bool {
 	if model.TextPaused() {
 		return true // Need to wait before advancing to the next Text
 	}
-	e.state = printText
+	e.state = decodeEvent
 	return false
 }

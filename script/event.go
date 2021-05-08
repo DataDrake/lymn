@@ -34,13 +34,14 @@ const (
 
 // Event is one of a sequence of possible actions which occur during a Scene
 type Event struct {
-	Type      EventKind `yaml:"type"`
-	Character string    `yaml:"character"`
-	Text      string    `yaml:"text"`
-	Scene     string    `yaml:"scene"`
-	Event     string    `yaml:"event"`
-	Choices   Choices   `yaml:"choices"`
-	Stats     Stats     `yaml:"stats"`
+	Type      EventKind    `yaml:"type"`
+	Character string       `yaml:"character"`
+	Text      string       `yaml:"text"`
+	Scene     string       `yaml:"scene"`
+	Event     string       `yaml:"event"`
+	Choices   Choices      `yaml:"choices"`
+	Stats     Stats        `yaml:"stats"`
+	Condition *Conditional `yaml:"condition"`
 }
 
 // Events maps a string ID to a sequential group of events
