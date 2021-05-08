@@ -20,6 +20,7 @@ While working on a game for Ludum Dare 48, I started working on an engine for bu
  * Script IF in YAML:
    - Scenes
    - Events
+     - Conditional Events (Stats)
    - Choices
    - Character Stats
    - Inventory (TBD)
