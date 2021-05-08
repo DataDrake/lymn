@@ -22,8 +22,10 @@ scenes:
                   event: begin
             begin:
                 - type: text
+                  character: Narrator
                   text: You are standing in an empty room with one door.
                 - type: choice
+                  character: Choose
                   text: Make a decision.
                   choices:
                     - name: Die
@@ -61,7 +63,10 @@ scenes:
                       type: set
                       value: 0
                 - type: choice
-                  text: You have died a gruesome death. Would you like to try again?
+                  text: |
+                    You have died a gruesome death.
+                    
+                    Would you like to try again?
                   choices:
                     - name: Yes
                       type: scene

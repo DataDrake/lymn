@@ -16,6 +16,10 @@
 
 package model
 
+import (
+	"strings"
+)
+
 // text contains text to be shared between UI and Engine
 var text struct {
 	character string
@@ -27,7 +31,7 @@ var text struct {
 // SetText changes the current text
 func SetText(character, value string) {
 	text.character = character
-	text.value = value
+	text.value = strings.TrimSpace(value)
 	text.changed = true
 }
 

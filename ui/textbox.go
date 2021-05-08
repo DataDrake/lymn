@@ -84,6 +84,7 @@ func (tb *Textbox) Draw(grid *Grid) {
 		tb.paused = true
 	}
 	tb.paused = false
+	grid.Paint(tb.x+1, tb.y+1, tb.cols-2, rows-2, color.Black)
 	character, value := model.GetText()
 	if len(character) > 0 {
 		character = " " + character + " "

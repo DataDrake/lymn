@@ -75,7 +75,7 @@ func (g *Grid) Text(x, y, cols, rows int, data []rune, fg color.Color, inverted 
 	if inverted {
 		mode = ebiten.CompositeModeDestinationOut
 	}
-	i := 0
+	var r rune
 	for row := 0; row < rows; row++ {
 		for col := 0; col < cols; col++ {
 			op := &ebiten.DrawImageOptions{
@@ -83,14 +83,19 @@ func (g *Grid) Text(x, y, cols, rows int, data []rune, fg color.Color, inverted 
 			}
 			op.GeoM.Scale(2, 2)
 			op.GeoM.Translate(float64(x), float64(y))
-			if i < len(data) {
-				g.img.DrawImage(g.font.Glyphs[data[i]].Image(), op)
+			glyph := g.font.Glyphs[0]
+			if len(data) > 0 && r != '\n' {
+				r, data = data[0], data[1:]
 			} else {
-				g.img.DrawImage(g.font.Glyphs[0].Image(), op)
+				r = '\n'
 			}
+			if r != '\n' {
+				glyph = g.font.Glyphs[r]
+			}
+			g.img.DrawImage(glyph.Image(), op)
 			x += xInc
-			i++
 		}
+		r = 0
 		x = xStart
 		y += yInc
 	}
